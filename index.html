@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider</title>
+    <link rel="shortcut icon" href="./slider.png" type="image/x-icon">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            min-height: 100vh;
+            background-image: url(./bg.jpg);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            border: 2px solid black;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.8); /* Light glass effect */
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            height: 60vh; /* Responsive height */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .slider-contb {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+        }
+
+        button {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: antiquewhite;
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-size: 1.5rem;
+        }
+
+        button:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+            transform: scale(1.1);
+        }
+
+        button:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="slider">
+            <div class="slide" style="background: url(./img1.jpg);"></div>
+            <div class="slide" style="background: url(./img2.jpg);"></div>
+            <div class="slide" style="background: url(./img3.jpg);"></div>
+        </div>
+        <div class="slider-contb">
+            <button class="prev">&#10094;</button>
+            <button class="next">&#10095;</button>
+        </div>
+    </div>
+
+    <script>
+        const slider = document.querySelector(".slider");
+        const slides = document.querySelectorAll(".slide");
+        const prevbtn = document.querySelector(".prev");
+        const nextbtn = document.querySelector(".next");
+
+        let slideIndex = 0;
+
+        function updateSlides() {
+            slider.style.transform = `translateX(-${slideIndex * 100}%)`;
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === slideIndex);
+            });
+        }
+
+        prevbtn.addEventListener('click', () => {
+            slideIndex = (slideIndex === 0) ? slides.length - 1 : slideIndex - 1;
+            updateSlides();
+        });
+
+        nextbtn.addEventListener('click', () => {
+            slideIndex = (slideIndex === slides.length - 1) ? 0 : slideIndex + 1;
+            updateSlides();
+        });
+
+        updateSlides(); // Initialize the slider position
+    </script>
+</body>
+</html>
